@@ -12,7 +12,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        $tasks = Task::latest()->paginate(5);
+
+        return view('tasks.index', compact('tasks'))->with(request()->input('page'));
     }
 
     /**
@@ -20,7 +22,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        return view('tasks.create');
     }
 
     /**
@@ -28,7 +30,18 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate input
+        $request->validate([
+            'user_id' => 'required',
+            'title' => 'required',
+            'description' => 'required'
+        ]);
+
+        // Create new task
+        Task::create($request->all());
+
+        // Redirect user
+        return redirect()->route('task.index')->with('success', 'Task created successfully');
     }
 
     /**
