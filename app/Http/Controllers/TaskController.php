@@ -49,7 +49,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+        return view('tasks.show', compact('task'));
     }
 
     /**
@@ -57,7 +57,7 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        return view('tasks.edit', compact('task'));
     }
 
     /**
@@ -65,7 +65,18 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        // Validate input
+        $request->validate([
+            'user_id' => 'required',
+            'title' => 'required',
+            'description' => 'required'
+        ]);
+
+        // Update task
+        $task->update($request->all());
+
+        // Redirect user
+        return redirect()->route('task.index')->with('success', 'Task updated successfully');
     }
 
     /**
@@ -73,6 +84,8 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        $task->delete();
+
+        return redirect()->route('task.index')->with('success', 'Task deleted successfully');
     }
 }

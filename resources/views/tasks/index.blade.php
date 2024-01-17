@@ -20,14 +20,14 @@
 
     <table class="table table-bordered">
         <tr>
-            <th>ID</th>
+            {{-- <th>ID</th> --}}
             <th>Title</th>
             <th>Description</th>
             <th width="280px">Action</th>
         </tr>
         @foreach ($tasks as $task)
         <tr>
-            <td>{{ $task->id }}</td>
+            {{-- <td>{{ $task->id }}</td> --}}
             <td>{{ $task->title }}</td>
             <td>{{ $task->description }}</td>
             <td>
